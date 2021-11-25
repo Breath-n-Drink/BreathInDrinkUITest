@@ -68,22 +68,38 @@ namespace BreathInDrinkUITest
             _driver.Navigate().GoToUrl(url);
 
 
-            IWebElement outputElement = _driver.FindElement(By.Id("DrinkList"));
-            string text = outputElement.Text;
+            //IWebElement outputElement = _driver.FindElement(By.Id("DrinkList"));
+            //string text = outputElement.Text;
 
-            Assert.IsTrue(text.Contains("A1"));
+            //Assert.IsTrue(text.Contains("GG"));
+            //Thread.Sleep(3000);
 
             IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
 
             list.FirstOrDefault().Click();
 
 
-            // virker ikke
-            IWebElement modal = list.FirstOrDefault();
-            string text2 = modal.Text;
-            Assert.IsTrue(text2.Contains("Measurements"));
 
-        
+            //Switch to active element here in our case its model dialogue box.
+            _driver.SwitchTo().ActiveElement();
+
+            Thread.Sleep(3000);
+
+            IWebElement output = _driver.FindElement(By.Id("DrinkName"));
+            string text2 = output.Text;
+
+            Assert.AreEqual("GG", text2);
+
+            // find the button which contains text "Yes" as we have dynamic id
+            //_driver.FindElement(By.XPath("//button[contains(text(),'Yes')]"));
+
+
+            // virker ikke
+            //IWebElement modal = list.FirstOrDefault();
+            //string text2 = modal.Text;
+            //Assert.IsTrue(text2.Contains("Measurements"));
+
+
 
 
 
