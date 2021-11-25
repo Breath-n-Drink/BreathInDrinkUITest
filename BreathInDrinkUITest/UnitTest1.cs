@@ -68,41 +68,39 @@ namespace BreathInDrinkUITest
             _driver.Navigate().GoToUrl(url);
 
 
-            //IWebElement outputElement = _driver.FindElement(By.Id("DrinkList"));
-            //string text = outputElement.Text;
+            IWebElement outputElement = _driver.FindElement(By.Id("DrinkList"));
+            string text = outputElement.Text;
+            Assert.IsTrue(text.Contains("GG"));
+        }
 
-            //Assert.IsTrue(text.Contains("GG"));
-            //Thread.Sleep(3000);
+        [TestMethod]
+        public void GetModalTest()
+        {
+            //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
+            string url = "http://127.0.0.1:5500/index.html";
+            // string url = "http://localhost:5500/index.htm";
+            _driver.Navigate().GoToUrl(url);
 
             IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
-
             list.FirstOrDefault().Click();
-
-
 
             //Switch to active element here in our case its model dialogue box.
             _driver.SwitchTo().ActiveElement();
-
-            Thread.Sleep(3000);
-
-            IWebElement output = _driver.FindElement(By.Id("DrinkName"));
-            string text2 = output.Text;
-
-            Assert.AreEqual("GG", text2);
+            IWebElement nameOutput = _driver.FindElement(By.Id("DrinkName"));
+            IWebElement ingredientsOutput = _driver.FindElement(By.Id("Ingredients"));
+            IWebElement alcoholOutput = _driver.FindElement(By.Id("AlcoholPercentage"));
+            IWebElement measurementsOutput = _driver.FindElement(By.Id("Measurements"));
+            string modalDrinkName = nameOutput.Text;
+            string modalIngredients = ingredientsOutput.Text;
+            string modalAlcohol = alcoholOutput.Text;
+            string modalMeasurements = measurementsOutput.Text;
+            Assert.AreEqual("A1", modalDrinkName);
+            Assert.IsTrue(modalIngredients.Contains("Gin"));
+            Assert.AreEqual("Alkohol 26%", modalAlcohol);
+            Assert.IsTrue(modalMeasurements.Contains("1 3/4"));
 
             // find the button which contains text "Yes" as we have dynamic id
             //_driver.FindElement(By.XPath("//button[contains(text(),'Yes')]"));
-
-
-            // virker ikke
-            //IWebElement modal = list.FirstOrDefault();
-            //string text2 = modal.Text;
-            //Assert.IsTrue(text2.Contains("Measurements"));
-
-
-
-
-
         }
     }
 }
