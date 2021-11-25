@@ -8,6 +8,7 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 
@@ -62,9 +63,7 @@ namespace BreathInDrinkUITest
             IWebElement outputElement = _driver.FindElement(By.Id("Promille"));
             string textActual = outputElement.Text;
             string textExpected = Math.Round(GetPromillle(), 1).ToString();
-            Assert.AreEqual(Math.Round(GetPromillle(), 1).ToString(), textActual);
-
-            
+            Assert.AreEqual(Math.Round(GetPromillle(), 1).ToString(CultureInfo.InvariantCulture), textActual);
         }
 
         [TestMethod]
