@@ -1,3 +1,4 @@
+using BreathInDrinkUITest.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -16,6 +17,7 @@ namespace BreathInDrinkUITest
     public class UnitTest1
     {
         private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
+        private static BreathndrinkContext _context = new BreathndrinkContext(); 
         // Download drivers to your driver folder.
         // Driver version must match your browser version.
         // http://chromedriver.chromium.org/downloads
@@ -44,6 +46,11 @@ namespace BreathInDrinkUITest
             string url = "http://127.0.0.1:5500/index.html";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
+            double GetPromillle()
+            {
+                Promille result = _context.Promille.ToList()[^1];
+                return result.Promille1;
+            }
 
             Assert.AreEqual("BreathNDrink", _driver.Title);
 
@@ -53,8 +60,9 @@ namespace BreathInDrinkUITest
             Thread.Sleep(2000);
 
             IWebElement outputElement = _driver.FindElement(By.Id("Promille"));
-            string text = outputElement.Text;
-            Assert.AreEqual("3.4", text);
+            string textActual = outputElement.Text;
+            string textExpected = Math.Round(GetPromillle(), 1).ToString();
+            Assert.AreEqual(Math.Round(GetPromillle(), 1).ToString(), textActual);
 
             
         }
@@ -80,6 +88,7 @@ namespace BreathInDrinkUITest
             string url = "http://127.0.0.1:5500/index.html";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
+            
 
             IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
             list.FirstOrDefault().Click();
@@ -98,6 +107,8 @@ namespace BreathInDrinkUITest
             Assert.IsTrue(modalIngredients.Contains("Gin"));
             Assert.AreEqual("Alkohol 26%", modalAlcohol);
             Assert.IsTrue(modalMeasurements.Contains("1 3/4"));
+
+            
 
             // find the button which contains text "Yes" as we have dynamic id
             //_driver.FindElement(By.XPath("//button[contains(text(),'Yes')]"));
