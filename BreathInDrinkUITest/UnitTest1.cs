@@ -6,6 +6,8 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace BreathInDrinkUITest
@@ -36,23 +38,55 @@ namespace BreathInDrinkUITest
         }
 
         [TestMethod]
-        public void GetAllTest()
+        public void GetMålingTest()
         {
             //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
             string url = "http://127.0.0.1:5500/index.html";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
 
-            Assert.AreEqual("BreathInDrink", _driver.Title);
+            Assert.AreEqual("BreathNDrink", _driver.Title);
 
             IWebElement inputElement = _driver.FindElement(By.Id("GetMålingButton"));
             inputElement.Click();
 
-            //IWebElement outputElement = _driver.FindElement(By.Id("RecordList"));
+            Thread.Sleep(2000);
 
-            //string text = outputElement.Text;
+            IWebElement outputElement = _driver.FindElement(By.Id("Promille"));
+            string text = outputElement.Text;
+            Assert.AreEqual("3.4", text);
 
-            //Assert.IsTrue(text.Contains("Danny"));
+            
+        }
+
+        [TestMethod]
+        public void GetListTest()
+        {
+            //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
+            string url = "http://127.0.0.1:5500/index.html";
+            // string url = "http://localhost:5500/index.htm";
+            _driver.Navigate().GoToUrl(url);
+
+
+            IWebElement outputElement = _driver.FindElement(By.Id("DrinkList"));
+            string text = outputElement.Text;
+
+            Assert.IsTrue(text.Contains("A1"));
+
+            IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
+
+            list.FirstOrDefault().Click();
+
+
+            // virker ikke
+            IWebElement modal = list.FirstOrDefault();
+            string text2 = modal.Text;
+            Assert.IsTrue(text2.Contains("Measurements"));
+
+        
+
+
+
         }
     }
 }
