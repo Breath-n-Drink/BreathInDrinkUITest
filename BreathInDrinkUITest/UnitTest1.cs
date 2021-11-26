@@ -17,7 +17,7 @@ namespace BreathInDrinkUITest
     [TestClass]
     public class UnitTest1
     {
-        private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
+        private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
         private static BreathndrinkContext _context = new BreathndrinkContext(); 
         // Download drivers to your driver folder.
         // Driver version must match your browser version.
@@ -44,7 +44,7 @@ namespace BreathInDrinkUITest
         public void GetMålingTest()
         {
             //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
-            string url = "http://127.0.0.1:5500/index.html";
+            string url = "https://breathndrinkvue.azurewebsites.net/";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
             double GetPromillle()
@@ -70,7 +70,7 @@ namespace BreathInDrinkUITest
         public void GetListTest()
         {
             //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
-            string url = "http://127.0.0.1:5500/index.html";
+            string url = "https://breathndrinkvue.azurewebsites.net/";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
 
@@ -84,7 +84,7 @@ namespace BreathInDrinkUITest
         public void GetModalTest()
         {
             //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
-            string url = "http://127.0.0.1:5500/index.html";
+            string url = "https://breathndrinkvue.azurewebsites.net/";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
             
@@ -104,7 +104,7 @@ namespace BreathInDrinkUITest
             string modalMeasurements = measurementsOutput.Text;
             Assert.AreEqual("A1", modalDrinkName);
             Assert.IsTrue(modalIngredients.Contains("Gin"));
-            Assert.AreEqual("Alkohol 26%", modalAlcohol);
+            Assert.AreEqual("Alkohol 39%", modalAlcohol);
             Assert.IsTrue(modalMeasurements.Contains("1 3/4"));
 
             
