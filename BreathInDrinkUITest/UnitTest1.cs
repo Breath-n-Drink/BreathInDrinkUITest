@@ -17,7 +17,8 @@ namespace BreathInDrinkUITest
     [TestClass]
     public class UnitTest1
     {
-        private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
+        //private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
+        private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
         private static BreathndrinkContext _context = new BreathndrinkContext(); 
         // Download drivers to your driver folder.
         // Driver version must match your browser version.
@@ -43,8 +44,8 @@ namespace BreathInDrinkUITest
         [TestMethod]
         public void GetMålingTest()
         {
-            //string url = "https://breathndrinkvue.azurewebsites.net/";
-            string url = "http://127.0.0.1:5500/index.html";
+            string url = "https://breathndrinkvue.azurewebsites.net/";
+            //string url = "http://127.0.0.1:5500/index.html";
             _driver.Navigate().GoToUrl(url);
             double GetPromillle()
             {
@@ -127,10 +128,10 @@ namespace BreathInDrinkUITest
             string modalIngredients = ingredientsOutput.Text;
             string modalAlcohol = alcoholOutput.Text;
             string modalMeasurements = measurementsOutput.Text;
-            Assert.AreEqual("A1", modalDrinkName);
-            Assert.IsTrue(modalIngredients.Contains("Gin"));
-            Assert.AreEqual("Alkohol 39%", modalAlcohol);
-            Assert.IsTrue(modalMeasurements.Contains("1 3/4"));
+            Assert.AreEqual("GG", modalDrinkName);
+            Assert.IsTrue(modalIngredients.Contains("Galliano"));
+            Assert.AreEqual("Alkohol 42%", modalAlcohol);
+            Assert.IsTrue(modalMeasurements.Contains("2 1/2"));
 
             
 
