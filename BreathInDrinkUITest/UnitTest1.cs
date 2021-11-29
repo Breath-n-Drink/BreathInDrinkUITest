@@ -47,6 +47,23 @@ namespace BreathInDrinkUITest
             string url = "https://breathndrinkvue.azurewebsites.net/";
             //string url = "http://127.0.0.1:5500/index.html";
             _driver.Navigate().GoToUrl(url);
+            Thread.Sleep(1000);
+
+            _driver.SwitchTo().ActiveElement();
+            IWebElement noButton = _driver.FindElement(By.Id("noButton"));
+            noButton.Click();
+
+            Thread.Sleep(1000);
+
+            IWebElement ageText = _driver.FindElement(By.Id("ageAlert"));
+            string age = ageText.Text;
+            Assert.IsTrue(age.Contains("18"));
+
+            IWebElement yesButton = _driver.FindElement(By.Id("yesButton"));
+            yesButton.Click();
+
+            Thread.Sleep(2000);
+
             double GetPromillle()
             {
                 Promille result = _context.Promille.ToList()[^1];
@@ -94,6 +111,12 @@ namespace BreathInDrinkUITest
             string url = "https://breathndrinkvue.azurewebsites.net/";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
+            Thread.Sleep(1000);
+            _driver.SwitchTo().ActiveElement();
+            IWebElement Button = _driver.FindElement(By.Id("yesButton"));
+            Button.Click();
+
+            Thread.Sleep(1000);
 
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
@@ -111,6 +134,11 @@ namespace BreathInDrinkUITest
             string url = "https://breathndrinkvue.azurewebsites.net/";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
+            Thread.Sleep(1000);
+            _driver.SwitchTo().ActiveElement();
+            IWebElement yesButton = _driver.FindElement(By.Id("yesButton"));
+            yesButton.Click();
+            Thread.Sleep(1000);
 
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
@@ -133,7 +161,7 @@ namespace BreathInDrinkUITest
             Assert.AreEqual("Alkohol 42%", modalAlcohol);
             Assert.IsTrue(modalMeasurements.Contains("2 1/2"));
 
-            
+
 
             // find the button which contains text "Yes" as we have dynamic id
             //_driver.FindElement(By.XPath("//button[contains(text(),'Yes')]"));
@@ -146,6 +174,11 @@ namespace BreathInDrinkUITest
             string url = "https://breathndrinkvue.azurewebsites.net/";
             // string url = "http://localhost:5500/index.htm";
             _driver.Navigate().GoToUrl(url);
+            Thread.Sleep(1000);
+            _driver.SwitchTo().ActiveElement();
+            IWebElement yesButton = _driver.FindElement(By.Id("yesButton"));
+            yesButton.Click();
+            Thread.Sleep(1000);
 
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
@@ -162,7 +195,7 @@ namespace BreathInDrinkUITest
 
             IWebElement outputElement2 = _driver.FindElement(By.Id("DrinkList"));
             string text2 = outputElement2.Text;
-            Assert.IsTrue(text2.Contains("Adam Bomb"));
+            Assert.IsTrue(text2.Contains("Aztec Punch"));
         }
     }
 }
