@@ -17,8 +17,8 @@ namespace BreathInDrinkUITest
     [TestClass]
     public class UnitTest1
     {
-        //private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
-        private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
+        private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
+        //private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
         private static BreathndrinkContext _context = new BreathndrinkContext(); 
         // Download drivers to your driver folder.
         // Driver version must match your browser version.
@@ -75,6 +75,7 @@ namespace BreathInDrinkUITest
             //Checker måling knap og udskreven promille
             IWebElement inputElement = _driver.FindElement(By.Id("GetMålingButton"));
             inputElement.Click();
+            Thread.Sleep(3000);
             IWebElement outputElement = _driver.FindElement(By.Id("Promille"));
             string textActual = outputElement.Text;
             string textExpected = Math.Round(GetPromillle(), 1).ToString();
@@ -143,6 +144,8 @@ namespace BreathInDrinkUITest
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
 
+            Thread.Sleep(2000);
+
             IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
             list.FirstOrDefault().Click();
 
@@ -156,10 +159,10 @@ namespace BreathInDrinkUITest
             string modalIngredients = ingredientsOutput.Text;
             string modalAlcohol = alcoholOutput.Text;
             string modalMeasurements = measurementsOutput.Text;
-            Assert.AreEqual("GG", modalDrinkName);
-            Assert.IsTrue(modalIngredients.Contains("Galliano"));
-            Assert.AreEqual("Alkohol 42%", modalAlcohol);
-            Assert.IsTrue(modalMeasurements.Contains("2 1/2"));
+            Assert.AreEqual("A1", modalDrinkName);
+            Assert.IsTrue(modalIngredients.Contains("Gin"));
+            Assert.AreEqual("Alkohol 39%", modalAlcohol);
+            Assert.IsTrue(modalMeasurements.Contains("1 3/4"));
 
 
 
@@ -183,11 +186,16 @@ namespace BreathInDrinkUITest
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
 
-            IWebElement vodkaElement = _driver.FindElement(By.Id("vodkaFilter"));
+            IWebElement filterButton = _driver.FindElement(By.Id("filterButton"));
+            filterButton.Click();
+
+            IWebElement vodkaElement = _driver.FindElement(By.Id("filterItem"));
             vodkaElement.Click();
 
-            IWebElement rumElement = _driver.FindElement(By.Id("rumFilter"));
-            rumElement.Click();
+            Thread.Sleep(2000);
+
+            //IWebElement rumElement = _driver.FindElement(By.Id("rumFilter"));
+            //rumElement.Click();
 
             IWebElement outputElement = _driver.FindElement(By.Id("DrinkList"));
             string text = outputElement.Text;
@@ -196,6 +204,9 @@ namespace BreathInDrinkUITest
             IWebElement outputElement2 = _driver.FindElement(By.Id("DrinkList"));
             string text2 = outputElement2.Text;
             Assert.IsTrue(text2.Contains("Aztec Punch"));
+
+            IWebElement alkoholFilter = _driver.FindElement(By.Id("customRange3"));
+            Assert.Fail();
         }
     }
 }
