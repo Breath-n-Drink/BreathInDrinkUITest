@@ -244,8 +244,6 @@ namespace BreathInDrinkUITest
             IWebElement outputElement2 = _driver.FindElement(By.Id("DrinkList"));
             string text2 = outputElement2.Text;
             Assert.IsTrue(text2.Contains("Orgasm"));
-
-            
         }
     }
 }
