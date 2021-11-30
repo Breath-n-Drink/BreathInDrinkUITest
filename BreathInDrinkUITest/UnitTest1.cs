@@ -207,13 +207,33 @@ namespace BreathInDrinkUITest
             IWebElement filterButton = _driver.FindElement(By.Id("filterButton"));
             filterButton.Click();
 
+            IWebElement weightElement = _driver.FindElement(By.Id("weightField"));
+            weightElement.Clear();
+            weightElement.SendKeys("70");
+
+            IWebElement currentBacFieldElement = _driver.FindElement(By.Id("currentBacField"));
+            currentBacFieldElement.Clear();
+            currentBacFieldElement.SendKeys("2.5");
+
+            IWebElement maxBacFieldElement = _driver.FindElement(By.Id("maxBacField"));
+            maxBacFieldElement.Clear();
+            maxBacFieldElement.SendKeys("3");
+
+            IWebElement genderElement = _driver.FindElement(By.Id("genderToggleMan"));
+            genderElement.Click();
+
             IWebElement vodkaElement = _driver.FindElement(By.Id("filterItem"));
             vodkaElement.Click();
 
             Thread.Sleep(2000);
 
-            IWebElement showAllElement = _driver.FindElement(By.Id("recommendButton"));
-            showAllElement.Click();
+            IWebElement alkoholFilter = _driver.FindElement(By.Id("alkoFilter2"));
+            alkoholFilter.Click();
+
+            IWebElement show = _driver.FindElement(By.Id("recommendButton"));
+            show.Click();
+
+            Thread.Sleep(2000);
             //IWebElement rumElement = _driver.FindElement(By.Id("rumFilter"));
             //rumElement.Click();
 
@@ -223,10 +243,9 @@ namespace BreathInDrinkUITest
 
             IWebElement outputElement2 = _driver.FindElement(By.Id("DrinkList"));
             string text2 = outputElement2.Text;
-            Assert.IsTrue(text2.Contains("Aztec Punch"));
+            Assert.IsTrue(text2.Contains("Orgasm"));
 
-            IWebElement alkoholFilter = _driver.FindElement(By.Id("customRange3"));
-            Assert.Fail();
+            
         }
     }
 }
