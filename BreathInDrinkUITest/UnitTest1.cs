@@ -81,6 +81,11 @@ namespace BreathInDrinkUITest
             string textExpected = Math.Round(GetPromillle(), 1).ToString();
             Assert.AreEqual(Math.Round(GetPromillle(), 1).ToString(CultureInfo.InvariantCulture), textActual);
 
+            IWebElement filterButton = _driver.FindElement(By.Id("filterButton"));
+            filterButton.Click();
+
+            Thread.Sleep(1000);
+
             //checker person input
             IWebElement weightElement = _driver.FindElement(By.Id("weightField"));
             weightElement.Clear();
@@ -119,6 +124,11 @@ namespace BreathInDrinkUITest
 
             Thread.Sleep(1000);
 
+            IWebElement inputElement = _driver.FindElement(By.Id("GetMålingButton"));
+            inputElement.Click();
+
+            Thread.Sleep(1000);
+
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
 
@@ -139,6 +149,11 @@ namespace BreathInDrinkUITest
             _driver.SwitchTo().ActiveElement();
             IWebElement yesButton = _driver.FindElement(By.Id("yesButton"));
             yesButton.Click();
+            Thread.Sleep(1000);
+
+            IWebElement inputElement = _driver.FindElement(By.Id("GetMålingButton"));
+            inputElement.Click();
+
             Thread.Sleep(1000);
 
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
@@ -183,8 +198,11 @@ namespace BreathInDrinkUITest
             yesButton.Click();
             Thread.Sleep(1000);
 
-            IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
-            showAllElement.Click();
+            IWebElement inputElement = _driver.FindElement(By.Id("GetMålingButton"));
+            inputElement.Click();
+
+            Thread.Sleep(1000);
+            
 
             IWebElement filterButton = _driver.FindElement(By.Id("filterButton"));
             filterButton.Click();
@@ -194,6 +212,8 @@ namespace BreathInDrinkUITest
 
             Thread.Sleep(2000);
 
+            IWebElement showAllElement = _driver.FindElement(By.Id("recommendButton"));
+            showAllElement.Click();
             //IWebElement rumElement = _driver.FindElement(By.Id("rumFilter"));
             //rumElement.Click();
 
