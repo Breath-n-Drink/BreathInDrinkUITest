@@ -244,6 +244,26 @@ namespace BreathInDrinkUITest
             IWebElement outputElement2 = _driver.FindElement(By.Id("DrinkList"));
             string text2 = outputElement2.Text;
             Assert.IsTrue(text2.Contains("Orgasm"));
+
+
+            IWebElement vodkaNotElement = _driver.FindElement(By.Id("filterItem"));
+            vodkaNotElement.Click();
+
+            Thread.Sleep(2000);
+
+            IWebElement vodkaNotElement2 = _driver.FindElement(By.Id("filterNotItem"));
+            vodkaNotElement2.Click();
+
+            Thread.Sleep(2000);
+
+            IWebElement show2 = _driver.FindElement(By.Id("recommendButton"));
+            show2.Click();
+
+            Thread.Sleep(2000);
+
+            IWebElement outputElement3 = _driver.FindElement(By.Id("DrinkList"));
+            string text3 = outputElement3.Text;
+            Assert.IsFalse(text3.Contains("Orgasm"));
         }
     }
 }
