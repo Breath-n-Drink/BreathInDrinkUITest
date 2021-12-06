@@ -17,8 +17,8 @@ namespace BreathInDrinkUITest
     [TestClass]
     public class UnitTest1
     {
-        //private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
-        private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
+        private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
+        //private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
         private static BreathndrinkContext _context = new BreathndrinkContext(); 
         // Download drivers to your driver folder.
         // Driver version must match your browser version.
@@ -114,6 +114,11 @@ namespace BreathInDrinkUITest
             IWebElement filter = _driver.FindElement(By.Id("filterButton"));
             filter.Click();
 
+            IWebElement filterButton = _driver.FindElement(By.Id("filterButton"));
+            filterButton.Click();
+
+            Thread.Sleep(1000);
+
             //checker person input
             IWebElement weightElement = _driver.FindElement(By.Id("weightField"));
             weightElement.Clear();
@@ -204,6 +209,8 @@ namespace BreathInDrinkUITest
 
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
+
+            Thread.Sleep(2000);
 
             IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
             list.FirstOrDefault().Click();
