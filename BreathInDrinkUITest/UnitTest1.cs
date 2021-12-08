@@ -17,9 +17,9 @@ namespace BreathInDrinkUITest
     [TestClass]
     public class UnitTest1
     {
-        private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
-        //private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
-        private static BreathndrinkContext _context = new BreathndrinkContext(); 
+        //private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
+        private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
+        private static BreathndrinkContext _context = new BreathndrinkContext();
         // Download drivers to your driver folder.
         // Driver version must match your browser version.
         // http://chromedriver.chromium.org/downloads
@@ -33,19 +33,9 @@ namespace BreathInDrinkUITest
             _driver = new FirefoxDriver(DriverDirectory);  // slow
             //_driver = new EdgeDriver(DriverDirectory); //  not working ...
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-        }
 
-        [ClassCleanup]
-        public static void TearDown()
-        {
-            _driver.Dispose();
-        }
-
-        [TestMethod]
-        public void GetMålingTest()
-        {
             string url = "https://breathndrinkvue.azurewebsites.net/";
-            //string url = "http://127.0.0.1:5500/index.html";
+
             _driver.Navigate().GoToUrl(url);
             Thread.Sleep(1000);
 
@@ -73,7 +63,29 @@ namespace BreathInDrinkUITest
 
             Thread.Sleep(1000);
 
-            double GetPromillle()
+            IWebElement inputElement = _driver.FindElement(By.Id("GetAlchoholLevelButton"));
+            inputElement.Click();
+
+            _driver.SwitchTo().ActiveElement();
+
+            Thread.Sleep(3000);
+
+            IWebElement doneElement = _driver.FindElement(By.Id("doneButton"));
+            doneElement.Click();
+
+            Thread.Sleep(3000);
+        }
+
+        [ClassCleanup]
+        public static void TearDown()
+        {
+            _driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetMeasurementTest()
+        {
+          double GetPromillle()
             {
                 Promille result = _context.Promille.ToList()[^1];
                 return result.Promille1;
@@ -82,8 +94,7 @@ namespace BreathInDrinkUITest
             Assert.AreEqual("BreathNDrink", _driver.Title);
 
             //Checker måling knap og udskreven promille
-            IWebElement inputElement = _driver.FindElement(By.Id("GetAlchoholLevelButton"));
-            inputElement.Click();
+            
 
             double promille = GetPromillle();
             if (promille < 0.7)
@@ -110,69 +121,15 @@ namespace BreathInDrinkUITest
                 string textActual = outputElement.Text;
                 Assert.AreEqual(Math.Round(GetPromillle(), 1).ToString(CultureInfo.InvariantCulture) + "‰", textActual);
             }
-
-            IWebElement filter = _driver.FindElement(By.Id("filterButton"));
-            filter.Click();
-
-            IWebElement filterButton = _driver.FindElement(By.Id("filterButton"));
-            filterButton.Click();
-
-            Thread.Sleep(1000);
-
-            //checker person input
-            IWebElement weightElement = _driver.FindElement(By.Id("weightField"));
-            weightElement.Clear();
-            weightElement.SendKeys("70");
-
-            IWebElement currentBacFieldElement = _driver.FindElement(By.Id("currentBacField"));
-            currentBacFieldElement.Clear();
-            currentBacFieldElement.SendKeys("2.5");
-
-            IWebElement maxBacFieldElement = _driver.FindElement(By.Id("maxBacField"));
-            maxBacFieldElement.Clear();
-            maxBacFieldElement.SendKeys("3");
-
-            IWebElement genderElement = _driver.FindElement(By.Id("genderToggleMan"));
-            genderElement.Click();
-
-            IWebElement recommendElement = _driver.FindElement(By.Id("recommendButton"));
-            recommendElement.Click();
-
-            IWebElement result = _driver.FindElement(By.Id("DrinkList"));
-            string text = result.Text;
-            Assert.IsFalse(text.Contains("GG"));
         }
 
         [TestMethod]
         public void GetListTest()
         {
-            //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
-            string url = "https://breathndrinkvue.azurewebsites.net/";
-            // string url = "http://localhost:5500/index.htm";
-            _driver.Navigate().GoToUrl(url);
-            Thread.Sleep(1000);
-            _driver.SwitchTo().ActiveElement();
-            IWebElement Button = _driver.FindElement(By.Id("yesButton"));
-            Button.Click();
-
-            Thread.Sleep(1000);
-
-            IWebElement nameInput = _driver.FindElement(By.Id("inputName"));
-            nameInput.Clear();
-            nameInput.SendKeys("Mads");
-
-            IWebElement submit = _driver.FindElement(By.Id("SubmitButton"));
-            submit.Click();
-
-            Thread.Sleep(1000);
-
-            IWebElement inputElement = _driver.FindElement(By.Id("GetAlchoholLevelButton"));
-            inputElement.Click();
-
-            Thread.Sleep(1000);
-
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
+
+            Thread.Sleep(2000);
 
             IWebElement outputElement = _driver.FindElement(By.Id("DrinkList"));
             string text = outputElement.Text;
@@ -183,30 +140,6 @@ namespace BreathInDrinkUITest
         [TestMethod]
         public void GetModalTest()
         {
-            //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
-            string url = "https://breathndrinkvue.azurewebsites.net/";
-            // string url = "http://localhost:5500/index.htm";
-            _driver.Navigate().GoToUrl(url);
-            Thread.Sleep(1000);
-            _driver.SwitchTo().ActiveElement();
-            IWebElement yesButton = _driver.FindElement(By.Id("yesButton"));
-            yesButton.Click();
-            Thread.Sleep(1000);
-
-            IWebElement nameInput = _driver.FindElement(By.Id("inputName"));
-            nameInput.Clear();
-            nameInput.SendKeys("Mads");
-
-            IWebElement submit = _driver.FindElement(By.Id("SubmitButton"));
-            submit.Click();
-
-            Thread.Sleep(1000);
-
-            IWebElement measure = _driver.FindElement(By.Id("GetAlchoholLevelButton"));
-            measure.Click();
-
-            Thread.Sleep(1000);
-
             IWebElement showAllElement = _driver.FindElement(By.Id("showAllButton"));
             showAllElement.Click();
 
@@ -229,43 +162,29 @@ namespace BreathInDrinkUITest
             Assert.IsTrue(modalIngredients.Contains("Galliano"));
             Assert.AreEqual("Alcohol 42%", modalAlcohol);
             Assert.IsTrue(modalMeasurements.Contains("2 1/2"));
-
-
-
-            // find the button which contains text "Yes" as we have dynamic id
-            //_driver.FindElement(By.XPath("//button[contains(text(),'Yes')]"));
         }
 
         [TestMethod]
         public void FilterTest()
         {
-            //string url = "file:///C:/andersb/javascript/sayhelloVue3/index.htm";
-            string url = "https://breathndrinkvue.azurewebsites.net/";
-            // string url = "http://localhost:5500/index.htm";
-            _driver.Navigate().GoToUrl(url);
-            Thread.Sleep(1000);
-            _driver.SwitchTo().ActiveElement();
-            IWebElement yesButton = _driver.FindElement(By.Id("yesButton"));
-            yesButton.Click();
-
-            Thread.Sleep(1000);
-
-            IWebElement nameInput = _driver.FindElement(By.Id("inputName"));
-            nameInput.Clear();
-            nameInput.SendKeys("Mads");
-
-            IWebElement submit = _driver.FindElement(By.Id("SubmitButton"));
-            submit.Click();
-
-            Thread.Sleep(3000);
-
-            IWebElement measure = _driver.FindElement(By.Id("GetAlchoholLevelButton"));
-            measure.Click();
-
-            Thread.Sleep(1000);
-
             IWebElement filter = _driver.FindElement(By.Id("filterButton"));
             filter.Click();
+
+            //checker person input
+            IWebElement weightElement = _driver.FindElement(By.Id("weightField"));
+            weightElement.Clear();
+            weightElement.SendKeys("70");
+
+            IWebElement currentBacFieldElement = _driver.FindElement(By.Id("currentBacField"));
+            currentBacFieldElement.Clear();
+            currentBacFieldElement.SendKeys("2.5");
+
+            IWebElement maxBacFieldElement = _driver.FindElement(By.Id("maxBacField"));
+            maxBacFieldElement.Clear();
+            maxBacFieldElement.SendKeys("3");
+
+            IWebElement genderElement = _driver.FindElement(By.Id("genderToggleMan"));
+            genderElement.Click();
 
             IWebElement vodkaElement = _driver.FindElement(By.Id("filterItem"));
             vodkaElement.Click();
@@ -282,7 +201,7 @@ namespace BreathInDrinkUITest
 
             IWebElement outputElement2 = _driver.FindElement(By.Id("DrinkList"));
             string text2 = outputElement2.Text;
-            Assert.IsTrue(text2.Contains("Aztec Punch"));
+            Assert.IsTrue(text2.Contains("AT&T"));
 
             IWebElement reset = _driver.FindElement(By.Id("resetButton"));
             reset.Click();
@@ -298,8 +217,16 @@ namespace BreathInDrinkUITest
 
             IWebElement outputElement3 = _driver.FindElement(By.Id("DrinkList"));
             string text3 = outputElement3.Text;
-            Assert.IsTrue(text3.Contains("GG"));
+            Assert.IsTrue(text3.Contains("Adam"));
 
         }
+
+        //[TestMethod]
+        //public void FilterTest2()
+        //{
+        //    IWebElement outputElement3 = _driver.FindElement(By.Id("DrinkList"));
+        //    string text3 = outputElement3.Text;
+        //    Assert.IsTrue(text3.Contains("GG"));
+        //}
     }
 }
