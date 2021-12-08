@@ -17,8 +17,8 @@ namespace BreathInDrinkUITest
     [TestClass]
     public class UnitTest1
     {
-        //private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
-        private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
+        private static readonly string DriverDirectory = "C:\\Users\\mads6\\OneDrive\\Dokumenter\\Kode\\webDrivers";
+        //private static readonly string DriverDirectory = "C:\\Users\\Mads\\OneDrive\\Dokumenter\\Skole\\webDrivers";
         private static BreathndrinkContext _context = new BreathndrinkContext();
         // Download drivers to your driver folder.
         // Driver version must match your browser version.
@@ -115,7 +115,7 @@ namespace BreathInDrinkUITest
                 string textActual = outputElement.Text;
                 Assert.AreEqual(Math.Round(GetPromillle(), 1).ToString(CultureInfo.InvariantCulture) + "‰", textActual);
             }
-            else
+            else if (promille < 2.9)
             {
                 IWebElement outputElement = _driver.FindElement(By.Id("Promille4"));
                 string textActual = outputElement.Text;
@@ -148,20 +148,10 @@ namespace BreathInDrinkUITest
             IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
             list.FirstOrDefault().Click();
 
-            //Switch to active element here in our case its model dialogue box.
-            _driver.SwitchTo().ActiveElement();
-            IWebElement nameOutput = _driver.FindElement(By.Id("DrinkName"));
-            IWebElement ingredientsOutput = _driver.FindElement(By.Id("Ingredients"));
-            IWebElement alcoholOutput = _driver.FindElement(By.Id("AlcoholPercentage"));
-            IWebElement measurementsOutput = _driver.FindElement(By.Id("Measurements"));
-            string modalDrinkName = nameOutput.Text;
-            string modalIngredients = ingredientsOutput.Text;
-            string modalAlcohol = alcoholOutput.Text;
-            string modalMeasurements = measurementsOutput.Text;
-            Assert.AreEqual("GG", modalDrinkName);
-            Assert.IsTrue(modalIngredients.Contains("Galliano"));
-            Assert.AreEqual("Alcohol 42%", modalAlcohol);
-            Assert.IsTrue(modalMeasurements.Contains("2 1/2"));
+            Assert.IsTrue(_driver.SwitchTo().ActiveElement() != null);
+         
+            IWebElement close = _driver.FindElement(By.Id("modalCloseButton"));
+            close.Click();
         }
 
         [TestMethod]
@@ -181,7 +171,7 @@ namespace BreathInDrinkUITest
 
             IWebElement maxBacFieldElement = _driver.FindElement(By.Id("maxBacField"));
             maxBacFieldElement.Clear();
-            maxBacFieldElement.SendKeys("3");
+            maxBacFieldElement.SendKeys("4");
 
             IWebElement genderElement = _driver.FindElement(By.Id("genderToggleMan"));
             genderElement.Click();
@@ -219,14 +209,112 @@ namespace BreathInDrinkUITest
             string text3 = outputElement3.Text;
             Assert.IsTrue(text3.Contains("Adam"));
 
+            IWebElement reset2 = _driver.FindElement(By.Id("resetButton"));
+            reset2.Click();
+        }
+
+        [TestMethod]
+        public void DarkModeTest()
+        {
+            IWebElement button = _driver.FindElement(By.Id("darkButton"));
+            button.Click();
+        }
+
+        [TestMethod]
+        public void RandomDrinkTest()
+        {
+            IWebElement button = _driver.FindElement(By.Id("showAllButton"));
+            button.Click();
+
+            IWebElement button2 = _driver.FindElement(By.Id("randomDrinkButton"));
+            button2.Click();
+
+            Assert.IsNotNull(_driver.SwitchTo().ActiveElement());
+            IWebElement close = _driver.FindElement(By.Id("modalCloseButton"));
+            close.Click();
+        }
+
+        [TestMethod]
+        public void DrinkHistoryTest()
+        {
+            IWebElement button = _driver.FindElement(By.Id("getPromilleButton"));
+            button.Click();
+
+            IWebElement outputElement = _driver.FindElement(By.Id("promilleHistoryTable"));
+            string text = outputElement.Text;
+
+            Assert.IsTrue(text.Contains("3.11"));
+        }
+
+        [TestMethod]
+        public void LogoTopTest()
+        {
+            IWebElement button = _driver.FindElement(By.Id("showAllButton"));
+            button.Click();
+
+            IWebElement button2 = _driver.FindElement(By.Id("logoId"));
+            button2.Click();
+        }
+
+        [TestMethod]
+        public void FavoriteTest()
+        {
+            IWebElement button = _driver.FindElement(By.Id("showAllButton"));
+            button.Click();
+
+            IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
+            list.FirstOrDefault().Click();
+
+            _driver.SwitchTo().ActiveElement();
+            IWebElement favorite = _driver.FindElement(By.Id("addFavorite"));
+            favorite.Click();
+
+            IWebElement close = _driver.FindElement(By.Id("modalCloseButton"));
+            close.Click();
+
+            IWebElement button2 = _driver.FindElement(By.Id("favoriteButton"));
+            button2.Click();
+
+            IList<IWebElement> list2 = _driver.FindElements(By.Id("DrinkList"));
+            Assert.IsTrue(list2.FirstOrDefault() != null);
+
+            IList<IWebElement> list3 = _driver.FindElements(By.Id("DrinkList"));
+            list3.FirstOrDefault().Click();
+
+            _driver.SwitchTo().ActiveElement();
+            IWebElement removeFavorite = _driver.FindElement(By.Id("removeFavorite"));
+            removeFavorite.Click();
+
+            close.Click();
+
+            IWebElement button3 = _driver.FindElement(By.Id("favoriteButton"));
+            button3.Click();
+
+            IList<IWebElement> list4 = _driver.FindElements(By.Id("DrinkList"));
+            Assert.IsTrue(list4.FirstOrDefault() == null);
         }
 
         //[TestMethod]
-        //public void FilterTest2()
+        //public void ratingTest()
         //{
-        //    IWebElement outputElement3 = _driver.FindElement(By.Id("DrinkList"));
-        //    string text3 = outputElement3.Text;
-        //    Assert.IsTrue(text3.Contains("GG"));
+        //    IWebElement button = _driver.FindElement(By.Id("showAllButton"));
+        //    button.Click();
+
+        //    IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
+        //    list.Last().Click();
+        //    _driver.SwitchTo().ActiveElement();
+
+        //    Thread.Sleep(2000);
+
+        //    IWebElement star = _driver.FindElement(By.Id("star3"));
+        //    star.Click();
         //}
+
+        [TestMethod]
+        public void sunhedLinkTest()
+        {
+            IWebElement skala = _driver.FindElement(By.Id("promilleSkala"));
+            skala.Click();
+        }
     }
 }
