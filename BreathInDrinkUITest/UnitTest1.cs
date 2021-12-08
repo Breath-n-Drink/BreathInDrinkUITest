@@ -316,5 +316,35 @@ namespace BreathInDrinkUITest
             IWebElement skala = _driver.FindElement(By.Id("promilleSkala"));
             skala.Click();
         }
+
+        [TestMethod]
+        public void addNameTest()
+        {
+            string url = "https://breathndrinkvue.azurewebsites.net/";
+
+            Drinkers deleteDrinker = _context.Drinkers.FirstOrDefault(d => d.Name == "Olga");
+            _context.Drinkers.Remove(deleteDrinker);
+
+            _driver.Navigate().GoToUrl(url);
+            Thread.Sleep(1000);
+
+            _driver.SwitchTo().ActiveElement();
+
+            IWebElement yesButton = _driver.FindElement(By.Id("yesButton"));
+            yesButton.Click();
+
+            Thread.Sleep(2000);
+
+            IWebElement nameInput = _driver.FindElement(By.Id("inputName"));
+            nameInput.Clear();
+            nameInput.SendKeys("Olga");
+
+            IWebElement submitNewName = _driver.FindElement(By.Id("AddButton"));
+            submitNewName.Click();
+
+            Drinkers newDrinker = _context.Drinkers.First(d => d.Name == "Olga");
+
+            Assert.IsTrue(_context.Drinkers.Contains(newDrinker));
+        }
     }
 }
