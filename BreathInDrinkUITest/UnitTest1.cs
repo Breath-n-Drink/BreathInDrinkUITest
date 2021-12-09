@@ -317,6 +317,10 @@ namespace BreathInDrinkUITest
         [TestMethod]
         public void sunhedLinkTest()
         {
+            IWebElement star = _driver.FindElement(By.Id("promilleGuideButton"));
+            star.Click();
+            
+            _driver.SwitchTo().ActiveElement();
             IWebElement skala = _driver.FindElement(By.Id("promilleSkala"));
             skala.Click();
         }
@@ -377,7 +381,7 @@ namespace BreathInDrinkUITest
             IWebElement input = _driver.FindElement(By.Id("nameFilterField"));
             input.SendKeys("Margarita");
 
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
 
             IWebElement nameFilterButton = _driver.FindElement(By.Id("nameFilterButton"));
             nameFilterButton.Click();
