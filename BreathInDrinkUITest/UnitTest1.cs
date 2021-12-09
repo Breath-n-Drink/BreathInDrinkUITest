@@ -35,6 +35,7 @@ namespace BreathInDrinkUITest
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
             string url = "https://breathndrinkvue.azurewebsites.net/";
+            //string url = "http://127.0.0.1:5500/index.html";
 
             _driver.Navigate().GoToUrl(url);
             Thread.Sleep(1000);
@@ -294,21 +295,24 @@ namespace BreathInDrinkUITest
             Assert.IsTrue(list4.FirstOrDefault() == null);
         }
 
-        //[TestMethod]
-        //public void ratingTest()
-        //{
-        //    IWebElement button = _driver.FindElement(By.Id("showAllButton"));
-        //    button.Click();
+        [TestMethod]
+        public void ratingTest()
+        {
+            IWebElement button = _driver.FindElement(By.Id("showAllButton"));
+            button.Click();
 
-        //    IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
-        //    list.Last().Click();
-        //    _driver.SwitchTo().ActiveElement();
+            IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
+            list.Last().Click();
+            _driver.SwitchTo().ActiveElement();
 
-        //    Thread.Sleep(2000);
+            Thread.Sleep(2000);
 
-        //    IWebElement star = _driver.FindElement(By.Id("star3"));
-        //    star.Click();
-        //}
+            IWebElement star = _driver.FindElement(By.Id("starRating3"));
+            star.Click();
+
+            IWebElement close = _driver.FindElement(By.Id("modalCloseButton"));
+            close.Click();
+        }
 
         [TestMethod]
         public void sunhedLinkTest()
@@ -345,6 +349,53 @@ namespace BreathInDrinkUITest
             Drinkers newDrinker = _context.Drinkers.First(d => d.Name == "Olga");
 
             Assert.IsTrue(_context.Drinkers.Contains(newDrinker));
+
+            IWebElement submit = _driver.FindElement(By.Id("SubmitButton"));
+            submit.Click();
+
+            Thread.Sleep(1000);
+
+            IWebElement inputElement = _driver.FindElement(By.Id("GetAlchoholLevelButton"));
+            inputElement.Click();
+
+            _driver.SwitchTo().ActiveElement();
+
+            Thread.Sleep(3000);
+
+            IWebElement doneElement = _driver.FindElement(By.Id("doneButton"));
+            doneElement.Click();
+
+            Thread.Sleep(3000);
         }
+
+        [TestMethod]
+        public void searchByNameTest()
+        {
+            IWebElement button = _driver.FindElement(By.Id("showAllButton"));
+            button.Click();
+
+            IWebElement input = _driver.FindElement(By.Id("nameFilterField"));
+            input.SendKeys("Margarita");
+
+            Thread.Sleep(1000);
+
+            IWebElement nameFilterButton = _driver.FindElement(By.Id("nameFilterButton"));
+            nameFilterButton.Click();
+
+            IList<IWebElement> list = _driver.FindElements(By.Id("DrinkList"));
+            list.FirstOrDefault().Click();
+            _driver.SwitchTo().ActiveElement();
+
+            IWebElement name = _driver.FindElement(By.Id("DrinkName"));
+            string text = name.Text;
+
+            Assert.AreEqual("Margarita", text);
+
+            IWebElement close = _driver.FindElement(By.Id("modalCloseButton"));
+            close.Click();
+
+        }
+
+
     }
 }
