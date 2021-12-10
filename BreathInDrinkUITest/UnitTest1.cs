@@ -329,6 +329,7 @@ namespace BreathInDrinkUITest
         public void addNameTest()
         {
             string url = "https://breathndrinkvue.azurewebsites.net/";
+            //string url = "http://127.0.0.1:5500/index.html";
 
             Drinkers deleteDrinker = _context.Drinkers.FirstOrDefault(d => d.Name == "Olga");
             _context.Drinkers.Remove(deleteDrinker);
